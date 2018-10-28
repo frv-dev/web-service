@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste com Web Service</title>
+</head>
+<body>
+    <h1>PRODUTOS</h1>
+    <table border="1" id="produtos"></table>
+
+    <script src="axios.min.js"></script>
+    <script>
+        axios.get('http://localhost:8080')
+            .then(data => {
+                console.log(data);
+                let produtoText = '';
+                data.data.map(produto => {
+                    produtoText += `
+                        <tr>
+                            <td>${produto.id}</td>
+                            <td>${produto.nome}</td>
+                        </tr>
+                    `;
+                });
+                document.getElementById("produtos").innerHTML =
+                    `
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                        </tr>
+                    ` + produtoText
+                ;
+            })
+            .catch(error => {
+                alert("Erro");
+                console.log(error);
+            })
+            .then(() => {
+                console.log("FIM");
+            })
+        ;
+    </script>
+</body>
+</html>
